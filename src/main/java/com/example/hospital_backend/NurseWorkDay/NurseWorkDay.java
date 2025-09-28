@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@jakarta.persistence.Table(name = "nurse_work_days")
+
 public class NurseWorkDay {
 
     @jakarta.persistence.Id

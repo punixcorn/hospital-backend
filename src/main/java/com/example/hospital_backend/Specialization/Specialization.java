@@ -28,7 +28,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "specializations")
+
 public class Specialization {
     @jakarta.persistence.Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

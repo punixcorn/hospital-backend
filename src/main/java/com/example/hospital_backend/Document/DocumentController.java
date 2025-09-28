@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@RequestMapping("/api/Documents")
+@RequestMapping("/api/documents")
 @CrossOrigin(origins = "*")
 public class DocumentController {
 

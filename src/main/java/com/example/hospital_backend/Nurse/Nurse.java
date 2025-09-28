@@ -14,8 +14,6 @@ import com.example.hospital_backend.Client.Client;
 import com.example.hospital_backend.ClientNurseHistory.ClientNurseHistory;
 import com.example.hospital_backend.Document.Document;
 import com.example.hospital_backend.HourlyData.HourlyData;
-import com.example.hospital_backend.Note.Note;
-import com.example.hospital_backend.PreviousClient.PreviousClient;
 import com.example.hospital_backend.Specialization.Specialization;
 import com.example.hospital_backend.Task.Task;
 import com.example.hospital_backend.WorkDay.WorkDay;
@@ -23,10 +21,9 @@ import com.example.hospital_backend.WorkDay.WorkDay;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
@@ -41,7 +38,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @NoArgsConstructor
 @AllArgsConstructor
-@jakarta.persistence.Table(name = "nurses")
+
 public class Nurse {
     @jakarta.persistence.Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -81,10 +78,10 @@ public class Nurse {
     @Builder.Default
     private Integer hoursWorked = 0;
 
-    @Column(columnDefinition = "DATE", nullable = false)
+    @Column(columnDefinition = "DATE", nullable = true)
     private LocalDate startDate;
 
-    @Column(columnDefinition = "DATE", nullable = false)
+    @Column(columnDefinition = "DATE", nullable = true)
     private LocalDate endDate;
 
     @Builder.Default
@@ -93,36 +90,30 @@ public class Nurse {
     @Column(columnDefinition = "DECIMAL(10,2)")
     private Double payPerHour;
 
-    @ManyToMany
-    @JoinTable(name = "nurse_certifications", joinColumns = @JoinColumn(name = "nurse_id"), inverseJoinColumns = @JoinColumn(name = "certification_id"))
+    @ManyToMany(fetch = FetchType.LAZY)
     private List<Certification> certifications;
 
-    @ManyToMany
-    @JoinTable(name = "nurse_specializations", joinColumns = @JoinColumn(name = "nurse_id"), inverseJoinColumns = @JoinColumn(name = "specialization_id"))
+    @ManyToMany(fetch = FetchType.LAZY)
     private List<Specialization> specializations;
 
-    @ManyToMany
-    @JoinTable(name = "nurse_work_days", joinColumns = @JoinColumn(name = "nurse_id"), inverseJoinColumns = @JoinColumn(name = "work_day_id"))
+    @ManyToMany(fetch = FetchType.LAZY)
     private List<WorkDay> workDays;
 
-    @OneToMany(mappedBy = "nurse", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY)
     private List<Document> documents;
 
-    @OneToMany(mappedBy = "nurse", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<PreviousClient> previousClients;
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<Client> previousClients;
 
-    @OneToMany(mappedBy = "nurse", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Note> notes;
+    private List<Long> notes;
 
-    @OneToMany(mappedBy = "nurse", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "nurse", cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.LAZY)
     private List<Task> tasks;
 
-    @OneToMany(mappedBy = "nurse", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "nurse", cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.LAZY)
     private List<HourlyData> hourlyData;
 
-    @ManyToMany
-    @JoinTable(name = "assigned_nurses", joinColumns = @JoinColumn(name = "nurse_id"), inverseJoinColumns = @JoinColumn(name = "client_id"))
-    private List<Client> assignedClients;
+    private List<Long> assignedClients;
 
     @OneToMany(mappedBy = "nurse", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ClientNurseHistory> clientHistories;

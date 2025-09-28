@@ -1,5 +1,6 @@
 package com.example.hospital_backend.Item;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,8 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@RequestMapping("/api/Items")
-@CrossOrigin(origins = "*")
+@RequestMapping("/api/items")
 public class ItemController {
 
     @Autowired
@@ -34,7 +34,7 @@ public class ItemController {
 
     // Get Item by ID
     @GetMapping("/{id}")
-    public ResponseEntity<Item> getItemById(@PathVariable String id) {
+    public ResponseEntity<Item> getItemById(@PathVariable Long id) {
         Optional<Item> Item = ItemService.getItemById(id);
         return Item.map(ResponseEntity::ok)
                    .orElse(ResponseEntity.notFound().build());
@@ -53,11 +53,23 @@ public class ItemController {
 
     // Update an existing Item
     @PutMapping("/{id}")
-    public ResponseEntity<Item> updateItem(@PathVariable String id, @RequestBody Item Item) {
+    public ResponseEntity<Item> updateItem(@PathVariable Long id, @RequestBody Item ItemRequest) {
         Optional<Item> existingItem = ItemService.getItemById(id);
         if (existingItem.isPresent()) {
-            Item.setId(id); // Ensure the ID is set correctly
-            Item updatedItem = ItemService.saveItem(Item);
+
+            if(ItemRequest.getQuantity() <= 0) {
+                ItemService.deleteItem(id);
+                return ResponseEntity.noContent().build();
+            }
+
+            Item existingItemEntity = existingItem.get();
+            Item updatedItemEntity = new Item(existingItemEntity.getId(),
+                    existingItemEntity.getInventory_id(),
+                    ItemRequest.getQuantity(),
+                    existingItemEntity.getCreatedAt(),
+                    LocalDateTime.now());
+
+            Item updatedItem = ItemService.saveItem(updatedItemEntity);
             return ResponseEntity.ok(updatedItem);
         } else {
             return ResponseEntity.notFound().build();
@@ -66,7 +78,7 @@ public class ItemController {
 
     // Delete a Item
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteItem(@PathVariable String id) {
+    public ResponseEntity<Void> deleteItem(@PathVariable Long id) {
         Optional<Item> existingItem = ItemService.getItemById(id);
         if (existingItem.isPresent()) {
             ItemService.deleteItem(id);

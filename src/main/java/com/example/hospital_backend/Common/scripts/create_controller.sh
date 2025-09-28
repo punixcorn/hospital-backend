@@ -71,7 +71,7 @@ import com.example.hospital_backend.Specialization.Specialization;
 import com.example.hospital_backend.*;
 
 @RestController
-@RequestMapping("/api/${FOLDER_NAME:l}s")
+@RequestMapping("/api/${folder_name:l}s")
 @CrossOrigin(origins = "*")
 public class ${FOLDER_NAME}Controller {
 

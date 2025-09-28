@@ -1,5 +1,11 @@
 package com.example.hospital_backend.WorkDay;
-
+/*
+x the workday
+you see every nurse if they are assigned a client are assigned a period, say 
+2 weeks 
+so Mon - Sun then Mon - Sun 
+the Workday is supposed to keep track of the number of days worked 
+*/
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -26,7 +32,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "work_days")
+
 public class WorkDay {
     @jakarta.persistence.Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

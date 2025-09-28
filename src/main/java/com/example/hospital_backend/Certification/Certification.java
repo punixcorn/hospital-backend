@@ -28,7 +28,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "certifications")
+
 public class Certification {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

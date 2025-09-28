@@ -2,29 +2,20 @@ package com.example.hospital_backend.Client;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-
-import com.example.hospital_backend.AssessmentInfo.AssessmentInfo;
 import com.example.hospital_backend.ClientNurseHistory.ClientNurseHistory;
-import com.example.hospital_backend.Driver.Driver;
-import com.example.hospital_backend.Item.Item;
-import com.example.hospital_backend.Medication.Medication;
-import com.example.hospital_backend.Note.Note;
-import com.example.hospital_backend.Nurse.Nurse;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -37,7 +28,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @NoArgsConstructor
 @AllArgsConstructor
-@jakarta.persistence.Table(name = "clients")
+
 public class Client {
     @jakarta.persistence.Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -104,25 +95,57 @@ public class Client {
     @Column(length = 500)
     private String emergencyContact;
 
-    @ManyToMany
-    @JoinTable(name = "client_medications", joinColumns = @JoinColumn(name = "client_id"), inverseJoinColumns = @JoinColumn(name = "medication_id"))
-    private List<Medication> medications;
+    @Builder.Default
+    private List<Long> medications = new ArrayList<>();
 
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ClientNurseHistory> nurseHistories;
 
-    @ManyToMany(mappedBy = "assignedClients")
-    private List<Nurse> assignedNurses;
+    @Builder.Default
+    private List<Long> assignedNurses = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "assignedClients")
-    private List<Driver> assignedDrivers;
+    @Builder.Default
+    private List<Long> assignedDrivers = new ArrayList<>();
 
-    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Item> items;
+    @Builder.Default
+    private List<Long> items = new ArrayList<>();
 
-    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Note> notes;
+    @Builder.Default
+    private List<Long> notes = new ArrayList<>();
 
-    @OneToOne(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
-    private AssessmentInfo assessmentInfo;
+    private Long assessmentInfoId;
+
+    /**
+     * Convert Client entity to ClientDTO
+     */
+    public Optional<ClientDTO> toClientDTO() {
+        return Optional.of(ClientDTO.builder()
+            .id(id)
+            .createdAt(createdAt)
+            .updatedAt(updatedAt)
+            .name(name)
+            .status(status)
+            .location(location)
+            .coordinatesLat(coordinatesLat)
+            .coordinatesLng(coordinatesLng)
+            .message(message)
+            .description(description)
+            .dateReachout(dateReachout)
+            .dateWanted(dateWanted)
+            .serviceType(serviceType)
+            .clientLinkID(clientLinkID)
+            .age(age)
+            .height(height)
+            .phone(phone)
+            .deceased(deceased)
+            .condition(condition)
+            .insurance(insurance)
+            .items(items)
+            .assessmentInfoId(assessmentInfoId)
+            .assignedDrivers(assignedDrivers)
+            .assignedNurses(assignedNurses)
+            .emergencyContact(emergencyContact)
+
+            .build());
+    }
 }

@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@RequestMapping("/api/NurseCertifications")
+@RequestMapping("/api/nursecertifications")
 @CrossOrigin(origins = "*")
 public class NurseCertificationController {
 

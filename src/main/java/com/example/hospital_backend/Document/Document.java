@@ -26,7 +26,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @NoArgsConstructor
 @AllArgsConstructor
-@jakarta.persistence.Table(name = "documents")
+
 public class Document {
     @jakarta.persistence.Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

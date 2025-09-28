@@ -27,7 +27,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @NoArgsConstructor
 @AllArgsConstructor
-@jakarta.persistence.Table(name = "assessment_info")
+
 public class AssessmentInfo {
     @jakarta.persistence.Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,14 +40,10 @@ public class AssessmentInfo {
     private LocalDateTime updatedAt;
 
     @lombok.NonNull
-    @ManyToOne
-    @JoinColumn(name = "nurse_id", nullable = false)
-    private Nurse nurse;
+    private Long nurseId;
 
     @lombok.NonNull
-    @ManyToOne
-    @JoinColumn(name = "client_id", nullable = false)
-    private Client client;
+    private Long clientId;
 
     @lombok.NonNull
     @Column(columnDefinition = "DATE", nullable = false)

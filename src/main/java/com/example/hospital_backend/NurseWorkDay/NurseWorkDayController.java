@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/NurseWorkDays")
+@RequestMapping("/api/nurseworkdays")
 @CrossOrigin(origins = "*")
 public class NurseWorkDayController {
 

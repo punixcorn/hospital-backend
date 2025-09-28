@@ -5,38 +5,30 @@ import java.time.LocalDateTime;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import com.example.hospital_backend.Client.Client;
-
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
+// inventory holds like static items, like 
+// a bed, a table, a chair which all have an inventory_id
+// a client can have many items which contains the inventory_id and the quantity
 @Entity
 @Data
 @Builder
 @RequiredArgsConstructor
-@NoArgsConstructor
 @AllArgsConstructor
-@jakarta.persistence.Table(name = "items")
+@NoArgsConstructor
+
 public class Item {
     @jakarta.persistence.Id
-    @Column(columnDefinition = "CHAR(36)")
-    private String id;
+    private Long id;
 
-    @lombok.NonNull
-    @ManyToOne
-    @JoinColumn(name = "client_id", nullable = false)
-    private Client client;
-
-    @lombok.NonNull
-    @Column(length = 255, nullable = false)
-    private String name;
+    @NonNull
+    private Long inventory_id;
 
     @Builder.Default
     private Integer quantity = 1;

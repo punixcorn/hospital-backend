@@ -13,7 +13,7 @@ public class ItemService {
     @Autowired
     ItemRepository ItemRepository;
 
-    public Optional<Item> getItemById(String id) {
+    public Optional<Item> getItemById(Long id) {
         return ItemRepository.findById(id);
     }
 
@@ -25,7 +25,7 @@ public class ItemService {
         return ItemRepository.save(Item);
     }
 
-    public void deleteItem(String id) {
+    public void deleteItem(Long id) {
         ItemRepository.deleteById(id);
     }
 

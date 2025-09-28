@@ -30,7 +30,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "nurse_certifications")
+
 public class NurseCertification {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

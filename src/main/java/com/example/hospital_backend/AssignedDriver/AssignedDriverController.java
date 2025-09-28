@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/AssignedDrivers")
+@RequestMapping("/api/assigneddrivers")
 @CrossOrigin(origins = "*")
 public class AssignedDriverController {
 

@@ -13,8 +13,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
 @Builder
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class ClientDTO {
@@ -39,6 +39,11 @@ public class ClientDTO {
     private String condition;
     private String insurance;
     private String emergencyContact;
-    private List<MedicationDTO> medications;
+    private List<Long> medications;
+    private List<Long> items;
+    private List<Long> assignedNurses;
+    private List<Long> assignedDrivers;
+
+    private Long assessmentInfoId;
     private AssessmentInfoDTO assessmentInfo;
 }

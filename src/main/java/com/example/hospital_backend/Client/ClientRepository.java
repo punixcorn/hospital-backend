@@ -2,6 +2,7 @@ package com.example.hospital_backend.Client;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -36,22 +37,20 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
     // List<Client> findByItemsContaining(@Param("itemName") String itemName);
 
     // Find clients assigned to specific nurses (by nurse IDs)
-    @Query("SELECT DISTINCT c FROM Client c JOIN c.assignedNurses n WHERE n.id IN :nurseIds")
-    List<Client> findByAssignedNurseIds(@Param("nurseIds") List<Long> nurseIds);
+    // @Query("SELECT DISTINCT c FROM Client c JOIN c.assignedNurses n WHERE n.id IN :nurseIds")
+    // List<Client> findByAssignedNurseIds(@Param("nurseIds") List<Long> nurseIds);
 
     // Find clients with specific medications (by medication IDs)
-    @Query("SELECT DISTINCT c FROM Client c JOIN c.medications m WHERE m.id IN :medicationIds")
-    List<Client> findByMedicationIds(@Param("medicationIds") List<Long> medicationIds);
+    // @Query("SELECT DISTINCT c FROM Client c JOIN c.medication m WHERE m.id IN :medicationIds")
+    // List<Client> findByMedicationIds(@Param("medicationIds") List<Long> medicationIds);
 
     // Retrieve all {@link Client}s from the data store by insurance.
     // @param insurance the insurance to search for.
     // @return a Collection of {@link Client}s.
     List<Client> findByInsurance(String insurance);
 
-    // Retrieve all {@link Client}s from the data store by phone number.
-    // @param phoneNumber the phone number to search for.
-    // @return a Collection of {@link Client}s.
-    List<Client> findByPhone(String phone); // Fixed: should match the field name 'phone' in Client entity
+    // Find client by phone number (returns single client since phone is unique)
+    Optional<Client> findByPhone(String phone);
 
     // Retrieve all {@link Client}s from the data store by condition.
     // @param condition the condition to search for.
@@ -84,4 +83,6 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
     
     // Find clients by condition containing a substring
     List<Client> findByConditionContainingIgnoreCase(String condition);
+
+    List<Long> findAllMedicationIdsById(Long clientId);
 }

@@ -22,7 +22,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @NoArgsConstructor
 @AllArgsConstructor
-@jakarta.persistence.Table(name = "assigned_drivers")
+
 public class AssignedDriver {
 
     @Id
@@ -30,14 +30,10 @@ public class AssignedDriver {
     private Long id;
 
     @lombok.NonNull
-    @ManyToOne
-    @JoinColumn(name = "client_id")
-    private Client client;
+    private Long clientId;
 
     @lombok.NonNull
-    @ManyToOne
-    @JoinColumn(name = "driver_id")
-    private Driver driver;
+    private Long driverId;
 
     @Column(length = 50)
     private String status;

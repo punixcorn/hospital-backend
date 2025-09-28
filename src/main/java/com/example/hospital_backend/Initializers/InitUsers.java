@@ -6,10 +6,13 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import com.example.hospital_backend.Client.Client;
 import com.example.hospital_backend.Client.ClientRepository;
+import com.example.hospital_backend.Item.Item;
+import com.example.hospital_backend.Item.ItemRepository;
 import com.example.hospital_backend.Nurse.Nurse;
 import com.example.hospital_backend.Nurse.NurseRepository;
 import com.example.hospital_backend.User.User;
@@ -24,17 +27,20 @@ public class InitUsers implements CommandLineRunner {
     NurseRepository nurseRepository;
     @Autowired
     ClientRepository clientRepository;
+    @Autowired
+    PasswordEncoder passwordEncoder;
+    @Autowired
+    ItemRepository itemRepository;
 
     @Override
     public void run(String... args) throws Exception {
-
-    {
     // Create 10 users
+    {
     List<User> users = List.of(
         User.builder()
             .name("Sarah Johnson")
             .email("sarah.johnson@hospital.com")
-            .passwordHash("hashed_password_1")
+            .passwordHash(passwordEncoder.encode("password1"))
             .role(UserRole.NURSE)
             .phone("555-0101")
             .build(),
@@ -42,7 +48,7 @@ public class InitUsers implements CommandLineRunner {
         User.builder()
             .name("Michael Chen")
             .email("michael.chen@hospital.com")
-            .passwordHash("hashed_password_2")
+            .passwordHash(passwordEncoder.encode("password2"))
             .role(UserRole.NURSE)
             .phone("555-0102")
             .build(),
@@ -50,7 +56,7 @@ public class InitUsers implements CommandLineRunner {
         User.builder()
             .name("Emily Rodriguez")
             .email("emily.rodriguez@hospital.com")
-            .passwordHash("hashed_password_3")
+            .passwordHash(passwordEncoder.encode("password3"))
             .role(UserRole.NURSE)
             .phone("555-0103")
             .build(),
@@ -58,7 +64,7 @@ public class InitUsers implements CommandLineRunner {
         User.builder()
             .name("David Wilson")
             .email("david.wilson@hospital.com")
-            .passwordHash("hashed_password_4")
+            .passwordHash(passwordEncoder.encode("password4"))
             .role(UserRole.NURSE)
             .phone("555-0104")
             .build(),
@@ -66,7 +72,7 @@ public class InitUsers implements CommandLineRunner {
         User.builder()
             .name("Lisa Thompson")
             .email("lisa.thompson@hospital.com")
-            .passwordHash("hashed_password_5")
+            .passwordHash(passwordEncoder.encode("password5"))
             .role(UserRole.NURSE)
             .phone("555-0105")
             .build(),
@@ -74,7 +80,7 @@ public class InitUsers implements CommandLineRunner {
         User.builder()
             .name("Admin User")
             .email("admin@hospital.com")
-            .passwordHash("hashed_admin_password")
+            .passwordHash(passwordEncoder.encode("admin"))
             .role(UserRole.ADMIN)
             .phone("555-0001")
             .build(),
@@ -82,7 +88,7 @@ public class InitUsers implements CommandLineRunner {
         User.builder()
             .name("Dr. James Miller")
             .email("james.miller@hospital.com")
-            .passwordHash("hashed_doctor_password")
+            .passwordHash(passwordEncoder.encode("doctor"))
             .role(UserRole.STAFF)
             .phone("555-0201")
             .build(),
@@ -111,10 +117,11 @@ public class InitUsers implements CommandLineRunner {
             .phone("555-0303")
             .build()
     );
-        for (User user : users) {
-            userRepository.save(user);
-        }
-    // Create 5 nurses
+    for (User user : users) {
+        userRepository.save(user);
+    }
+    // create 10 nurses
+    
     List<Nurse> nurses = List.of(
         Nurse.builder()
             .userId(users.get(0).getId())
@@ -205,7 +212,6 @@ public class InitUsers implements CommandLineRunner {
     for (Nurse nurse : nurses) {
         nurseRepository.save(nurse);
     }
-
     // Create 5 clients
     List<Client> clients = List.of(
         Client.builder()
@@ -316,8 +322,41 @@ public class InitUsers implements CommandLineRunner {
 
 
     for (Client client : clients) {
+
         clientRepository.save(client);
     }
-}
+}   
+
+    //create 10 items
+    {
+        List<Item> Items = List.of(
+            Item.builder().id(1L).inventory_id(1001L).quantity(5).build(),
+            Item.builder().id(2L).inventory_id(1002L).quantity(3).build(),
+            Item.builder().id(3L).inventory_id(1003L).quantity(10).build(),
+            Item.builder().id(4L).inventory_id(1004L).quantity(2).build(),
+            Item.builder().id(5L).inventory_id(1005L).quantity(8).build(),
+            Item.builder().id(6L).inventory_id(1006L).quantity(1).build(),
+            Item.builder().id(7L).inventory_id(1007L).quantity(15).build(),
+            Item.builder().id(8L).inventory_id(1008L).quantity(4).build(),
+            Item.builder().id(9L).inventory_id(1009L).quantity(6).build(),
+            Item.builder().id(10L).inventory_id(1010L).quantity(12).build(),
+            Item.builder().id(11L).inventory_id(1011L).quantity(7).build(),
+            Item.builder().id(12L).inventory_id(1012L).quantity(9).build(),
+            Item.builder().id(13L).inventory_id(1013L).quantity(3).build(),
+            Item.builder().id(14L).inventory_id(1014L).quantity(20).build(),
+            Item.builder().id(15L).inventory_id(1015L).quantity(11).build(),
+            Item.builder().id(16L).inventory_id(1016L).quantity(5).build(),
+            Item.builder().id(17L).inventory_id(1017L).quantity(14).build(),
+            Item.builder().id(18L).inventory_id(1018L).quantity(2).build(),
+            Item.builder().id(19L).inventory_id(1019L).quantity(8).build(),
+            Item.builder().id(20L).inventory_id(1020L).quantity(6).build()
+        );
+
+        for (var item : Items){
+            itemRepository.save(item);
+        }
+    }
+
+
     }
 }

@@ -25,7 +25,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @NoArgsConstructor
 @AllArgsConstructor
-@jakarta.persistence.Table(name = "medications")
 public class Medication {
     @jakarta.persistence.Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,7 +48,4 @@ public class Medication {
 
     @Column(length = 100)
     private String strength;
-
-    @ManyToMany(mappedBy = "medications")
-    private List<Client> clients;
 }

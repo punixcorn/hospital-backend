@@ -31,7 +31,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @NoArgsConstructor
 @AllArgsConstructor
-@jakarta.persistence.Table(name = "drivers")
+
 public class Driver {
     @jakarta.persistence.Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -73,7 +73,5 @@ public class Driver {
     @Builder.Default
     private Integer totalHoursAssigned = 0;
 
-    @ManyToMany
-    @JoinTable(name = "assigned_drivers", joinColumns = @JoinColumn(name = "driver_id"), inverseJoinColumns = @JoinColumn(name = "client_id"))
-    private List<Client> assignedClients;
+    private List<Long> assignedClients;
 }
