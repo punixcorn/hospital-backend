@@ -6,7 +6,10 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import com.example.hospital_backend.AssessmentInfo.AssessmentInfoDTO;
+import com.example.hospital_backend.Driver.DriverDto;
+import com.example.hospital_backend.Item.ItemDto;
 import com.example.hospital_backend.Medication.MedicationDTO;
+import com.example.hospital_backend.Nurse.NurseDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -39,10 +42,10 @@ public class ClientDTO {
     private String condition;
     private String insurance;
     private String emergencyContact;
-    private List<Long> medications;
-    private List<Long> items;
-    private List<Long> assignedNurses;
-    private List<Long> assignedDrivers;
+    private List<MedicationDTO> medications;
+    private List<ItemDto> items;
+    private List<NurseDTO> assignedNurses;
+    private List<DriverDto> assignedDrivers;
 
     private Long assessmentInfoId;
     private AssessmentInfoDTO assessmentInfo;

@@ -8,6 +8,9 @@ import java.util.Optional;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.id.Assigned;
+import org.hibernate.sql.ast.tree.update.Assignment;
+import org.springframework.expression.spel.ast.Assign;
 
 import com.example.hospital_backend.Certification.Certification;
 import com.example.hospital_backend.Client.Client;
@@ -25,6 +28,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -113,7 +117,8 @@ public class Nurse {
     @OneToMany(mappedBy = "nurse", cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.LAZY)
     private List<HourlyData> hourlyData;
 
-    private List<Long> assignedClients;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Client assignedClient;
 
     @OneToMany(mappedBy = "nurse", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ClientNurseHistory> clientHistories;

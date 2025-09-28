@@ -9,6 +9,8 @@ import java.util.Optional;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import com.example.hospital_backend.ClientNurseHistory.ClientNurseHistory;
+import com.example.hospital_backend.Driver.Driver;
+import com.example.hospital_backend.Item.Item;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -21,6 +23,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import com.example.hospital_backend.Nurse.Nurse;
 
 @Entity
 @Data
@@ -28,7 +31,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @NoArgsConstructor
 @AllArgsConstructor
-
 public class Client {
     @jakarta.persistence.Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -98,20 +100,17 @@ public class Client {
     @Builder.Default
     private List<Long> medications = new ArrayList<>();
 
-    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ClientNurseHistory> nurseHistories;
+    @OneToMany
+    private List<Nurse> nurseHistories;
 
     @Builder.Default
-    private List<Long> assignedNurses = new ArrayList<>();
+    private List<Nurse> assignedNurses = new ArrayList<>();
 
     @Builder.Default
-    private List<Long> assignedDrivers = new ArrayList<>();
+    private List<Driver> assignedDrivers = new ArrayList<>();
 
     @Builder.Default
-    private List<Long> items = new ArrayList<>();
-
-    @Builder.Default
-    private List<Long> notes = new ArrayList<>();
+    private List<Item> items = new ArrayList<>();
 
     private Long assessmentInfoId;
 
@@ -140,12 +139,8 @@ public class Client {
             .deceased(deceased)
             .condition(condition)
             .insurance(insurance)
-            .items(items)
             .assessmentInfoId(assessmentInfoId)
-            .assignedDrivers(assignedDrivers)
-            .assignedNurses(assignedNurses)
             .emergencyContact(emergencyContact)
-
             .build());
     }
 }
